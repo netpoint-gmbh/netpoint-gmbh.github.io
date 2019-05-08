@@ -4059,7 +4059,7 @@ class Mochaterial extends Mocha.reporters.Base {
         this.updateSuite(test.parent, ["has-blocked"]);
         const description = this.itemDescription("Test", test.title, "was blocked by previous error");
         this.makeItem(test, "blocked", description);
-        const failHook = test.parent.get("suite").querySelector(`li.hook.failed[for="${this.quot(test.title)}"`);
+        const failHook = test.parent.get("suite").querySelector(`li.hook.failed[for="${this.quot(test.title)}"]`);
         if (failHook) {
             failHook.after(test.parent.get("item"));
         }
