@@ -1919,10 +1919,7 @@ var MDCDrawer = /** @class */ (function (_super) {
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */Mocha.prototype.reporterOptions = function (reporterOptions) {
-    this.options.reporterOptions = reporterOptions;
-};
-const DefaultOptions = {
+ */const DefaultOptions = {
     title: "document.title",
     titlePath: "window.location",
     showHooksDefault: true,
@@ -1936,8 +1933,8 @@ const DefaultOptions = {
 class Mochaterial extends Mocha.reporters.Base {
     constructor(runner, options) {
         super(runner, options);
-        this.highlighter = new Worker('https://netpoint-gmbh.github.io/mochaterial/workers/worker.hljs.js');
-        this.comparer = new Worker('https://netpoint-gmbh.github.io/mochaterial//workers/worker.diff2Html.js');
+        this.highlighter = this.createWorker('./workers/worker.hljs.js');
+        this.comparer = this.createWorker('./workers/worker.diff2Html.js');
         this.stats = this.stats;
         this.suiteCount = 0;
         this.currentFilter = "passed";
@@ -2004,6 +2001,31 @@ class Mochaterial extends Mocha.reporters.Base {
                 });
             });
         };
+    }
+    createWorker(workerUrl) {
+        var worker = null;
+        try {
+            worker = new Worker(workerUrl);
+        }
+        catch (e) {
+            try {
+                var blob;
+                try {
+                    blob = new Blob(["importScripts('" + workerUrl + "');"], { "type": 'application/javascript' });
+                }
+                catch (e1) {
+                    var blobBuilder = new (window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder)();
+                    blobBuilder.append("importScripts('" + workerUrl + "');");
+                    blob = blobBuilder.getBlob('application/javascript');
+                }
+                var url = window.URL || window.webkitURL;
+                var blobUrl = url.createObjectURL(blob);
+                worker = new Worker(blobUrl);
+            }
+            catch (e2) {
+            }
+        }
+        return worker;
     }
     get(elementId) {
         return document.getElementById(elementId);
