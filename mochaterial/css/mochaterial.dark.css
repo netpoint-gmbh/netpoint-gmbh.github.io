@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700);
+@import url("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/tomorrow-night-bright.min.css");
 :root {
   --mdc-theme-primary: #27272f;
   --mdc-theme-secondary: #00b0ff;
