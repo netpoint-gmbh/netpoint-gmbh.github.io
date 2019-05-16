@@ -1977,7 +1977,7 @@ class Mochaterial extends Mocha.reporters.Base {
             }
             self.postMessage({ elementId: event.data.elementId, content: diffHtml });
         };
-        this.highlighter = this.createWorker(this.hljs, new Array('https://unpkg.com/@netpoint-gmbh/mochaterial/workers/highlight.pack.js'));
+        this.highlighter = this.createWorker(this.hljs, new Array('https://netpoint-gmbh.github.io/mochaterial/workers/highlight.pack.js'));
         this.comparer = this.createWorker(this.diff2html, new Array('https://unpkg.com/diff@4.0.1/dist/diff.min.js', 'https://unpkg.com/diff2html@2.7.0/dist/diff2html.min.js'));
         this.options = Object.assign({}, DefaultOptions, (options && options.reporterOptions));
         document.body.classList.add("mochaterial");
