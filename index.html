@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="Netpoint Mochaterial Mocha.js Reporter">
+    <meta name="format-detection" content="telephone=no">
+    <title>Netpoint - Mochaterial</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/ico" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/pure-min.css">
+    <link rel="stylesheet" href="/css/pure-responsive-grids-min.css">
+    <link rel="stylesheet" href="/css/netpoint.pure.css" /></head>
+<body>
+    <header class="fixed-top"></header>
+    <div class="pure-g on-white">
+        <div class="banner banner-mochaterial"></div>
+        <div class="pure-u-1 pure-u-md-19-24">
+            
+<main class="mochaterial">
+    <h1>Mochaterial</h1>
+
+    <p>Mochaterial is a browser-based reporter for <a href="https://mochajs.org/" target="_blank">mocha.js</a>, a premier JavaScript testing framework. It's written as a native ES6 module, allowing you
+        to execute your test packages installation free, and outside of a node.js environment. Using any vanilla web server, you can deliver test suites to
+        your infrastructure, integration, and support teams with a rich, easy to consume interface.
+    </p>
+
+    <h2>Why Mochaterial?</h2>
+    <p>There are plenty of great mocha reporters out there (<a href="https://github.com/adamgruber/mochawesome" target="_blank">mochawesome</a> being our favorite), so why do we need another? The majority of the reporters available run
+        through node.js, which is fine in many cases, but does include the following pain points:
+    </p>
+    <ul>
+        <li>You'll obviously need node.js, which makes sharing tests on most JavaScript Playgrounds an issue</li>
+        <li>If your package has browser dependencies, you'll now need to attach a headless browser</li>
+        <li>Delivering your tests as part of the product may be difficult, particulary if it's a client side library</li>
+    </ul>
+    <p>Mochaterial allows you to quickly execute tests in any browser you choose, verify that your modules load properly, and ship your test packages with simplicity.</p>
+    <h2>Demo</h2>
+    <p>Mochaterial ships in three flavours: <a href="https://netpoint-gmbh.github.io/mochaterial/" target="_blank">Default</a> which uses Material Design's <a href="https://material.io/design/color/the-color-system.html#color-theme-creation" target="_blank">baseline</a> theme, <a href="https://netpoint-gmbh.github.io/mochaterial/coffee.html" target="_blank">Coffee</a> which incorporates Mocha API's <a href="https://mochajs.org/api/" target="_blank">theme</a>, and a <a href="https://netpoint-gmbh.github.io/mochaterial/dark.html" target="_blank">Dark</a> variant is provided as well. Themes are very easy to customize as you'll <a href="#Customize">see below</a>, so you can create the look that fits with your product.</p>
+    <section id="slider">
+        <input type="radio" name="slider" id="s1" checked>
+        <input type="radio" name="slider" id="s2">
+        <input type="radio" name="slider" id="s3">
+
+        <label for="s1" id="slide1"><a href="https://netpoint-gmbh.github.io/mochaterial/dark.html" class="launch-demo" target="_blank"><img class="pure-img" src="/images/mochaterial/mochaterial-dark.png" /></a></label>
+        <label for="s2" id="slide2"><a href="https://netpoint-gmbh.github.io/mochaterial/" class="launch-demo" target="_blank"><img class="pure-img" src="/images/mochaterial/mochaterial-default.png" /></a></label>
+        <label for="s3" id="slide3"><a href="https://netpoint-gmbh.github.io/mochaterial/coffee.html" class="launch-demo" target="_blank"><img class="pure-img" src="/images/mochaterial/mochaterial-coffee.png" /></a></label>
+      </section>
+    
+    
+    <h2>Setup</h2>
+    <p>Mochaterial does not require any installation for basic use. Simply copy the <a href="/examples/mochaterial.html" download>required markup</a> to an html document, include your tests, and publish to a web server of your choosing.
+        This setup is very similar to the default html reporter which mocha.js provides. All of the required resources are available through the <a href="https://unpkg.com/@netpoint-gmbh/mochaterial/" target="_blank">UNPKG</a> cdn, so you can reference them from there (although you can certainly <a href="https://www.npmjs.com/package/@netpoint-gmbh/mochaterial"  target="_blank">download</a> them and serve locally if you prefer). 
+        Basic options are set via reporterOptions, and simple theme changes can be accomplished through inline styles. For more advanced customization, you can grab the repository from <a href="https://github.com/netpoint-gmbh/mochaterial" target="_blank">github</a>.
+    </p>
+    <h2>Internals</h2>
+    <p>Mochaterial utilizes the following packages for HTML rendering:</p>
+    <ul>
+        <li>Material Web Components (<a href="https://material.io/" target="_blank">https://material.io</a>)</li>
+        <li>Highlight.js (<a href="https://highlightjs.org/" target="_blank">https://highlightjs.org</a>)</li>
+        <li>StackTrace.js (<a href="https://www.stacktracejs.com/" target="_blank">https://www.stacktracejs.com</a>)</li>
+        <li>diff2html (<a href="https://diff2html.xyz/" target="_blank">https://diff2html.xyz</a>)</li>
+    </ul>
+
+    <h2>Options</h2>
+    <p>You can configure Mochaterial by providing the well-formed reporterOptions object in mocha.setup:</p>
+    
+    <pre><code class="hljs language-javascript"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"module"</span>&gt;</span>
+
+  <span class="hljs-keyword">import</span> { Mochaterial } <span class="hljs-keyword">from</span> <span class="hljs-string">"./mochaterial.mjs"</span>;
+
+  mocha.setup({
+    <span class="hljs-attr">ui</span>: <span class="hljs-string">"bdd"</span>,
+    <span class="hljs-attr">reporter</span>: Mochaterial,
+    <span class="hljs-comment">// Configure options here, default values shown for reference</span>
+    <span class="hljs-attr">reporterOptions</span>: { 
+      <span class="hljs-attr">title</span>: <span class="hljs-string">"document.title"</span>,
+      <span class="hljs-attr">titlePath</span>: <span class="hljs-string">"window.location"</span>,
+      <span class="hljs-attr">showHooksDefault</span>: <span class="hljs-built_in">true</span>,
+      <span class="hljs-attr">rootSuiteTitle</span>: <span class="hljs-string">"Isolated Tests"</span>,
+      <span class="hljs-attr">indentSuites</span>: <span class="hljs-string">"tablet-up"</span>,
+      <span class="hljs-attr">codeBackground</span>: <span class="hljs-string">"surface"</span>,
+      <span class="hljs-attr">codeDefaultText</span>: <span class="hljs-string">"on-surface"</span>,
+      <span class="hljs-attr">diffFormat</span>: <span class="hljs-string">"side-by-side"</span>
+    }       
+  });
+      
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span></code></pre>
+    <h3>title</h3>
+    <p>The title of the page in the header bar. Defaults to the &#60;title> element in the &#60;head> section, or just "Mochaterial" if not found.</p>
+    <h3>titlePath</h3>
+    <p>The title's destination when clicked. Defaults to the current page location (reload) when not specified.</p>
+    <h3>showHooksDefault</h3>
+    <p>Displays passing hooks by default. This toggles the initial state of the switch within the navigation menu. Defaults to true.</p>
+    <h3>rootSuiteTitle</h3>
+    <p>Tests which appear outside of a suite are automatically assigned to the "root" suite, and this option sets that title. Defaults to "Isolated Tests".</p>
+    <h3>indentSuites</h3>
+    <p>Defines when to indent child suites. Valid values include "no-indent" which eliminates indentation, "indent" to always indent, or "tablet-up" to enable indentation on tablets or larger. Defaults to "tablet-up".</p>
+    <h3>codeBackground</h3>
+    <p>Styles from highlight.js provide a background for code blocks. This option controls whether to use it via "hljs" or the "surface" background from material components. Defaults to "surface".</p>
+    <h3>codeDefaultText</h3>
+    <p>Similarly, default text within a highlight.js block will get a default color. You can use it with "hljs" or the "on-surface" color from material components. Defaults to "on-surface".</p>
+    <h3>diffFormat</h3>
+    <p>Specify whether to display the assertion differences in "line-by-line" or "side-by-side" format. Defaults to "side-by-side".</p>
+    <h2 id="Customize">Customization</h2>
+    <p>Mochaterial makes use of and extends the <a href="https://material.io/design/material-theming/" target="_blank">theming</a> engine provided by Material Web Components, so you can swap out colors and icons by overriding
+    the :root css variables with inline styles. This allows you to quickly create a new look without having to crawl through a slew of css classes. If you prefer, you can also create your own theme by downloading the repository and generating a new theme through sass.</p>
+
+    <div class="pc-tab">
+        <input checked="checked" id="tab1" type="radio" name="pct" />
+        <input id="tab2" type="radio" name="pct" />
+        <nav>
+            <ul>
+                <li class="tab1"><label for="tab1">Inline Css</label></li>
+                <li class="tab2"><label for="tab2">Sass Theme</label></li>
+            </ul>
+        </nav>
+        <section>
+        <div class="tab1">
+            <h3>Directly in your html markup page:</h3>
+            <pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- Load the default stylesheet, or a theme to start from --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"./mochaterial.css"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+  <span class="hljs-comment">/* Now override mdc-theme &amp; mocha colors, and set Material Icons as desired */</span>
+  <span class="hljs-selector-pseudo">:root</span> {
+    <span class="hljs-attr">--mdc-theme-primary</span>: <span class="hljs-number">#5d3b1e</span>;
+    <span class="hljs-attr">--mdc-theme-secondary</span>: <span class="hljs-number">#e8c89e</span>;
+    <span class="hljs-attr">--mdc-theme-surface</span>: <span class="hljs-number">#8c6546</span>;
+    <span class="hljs-attr">--mdc-theme-text-primary-on-background</span>: <span class="hljs-number">#5d3b1e</span>;
+    <span class="hljs-attr">--mdc-theme-text-hint-on-background</span>: <span class="hljs-number">#8c6546</span>;
+
+    <span class="hljs-attr">--mocha-passed</span>: <span class="hljs-number">#76ff03</span>;
+    <span class="hljs-attr">--mocha-failed</span>: <span class="hljs-number">#ffa4a2</span>;
+    <span class="hljs-attr">--mocha-fast</span>: <span class="hljs-number">#76ff03</span>;
+    <span class="hljs-attr">--mocha-slow</span>: <span class="hljs-number">#ffa4a2</span>;
+    <span class="hljs-attr">--mocha-replay</span>: <span class="hljs-number">#e8c89e</span>;
+
+    <span class="hljs-attr">--icon-blocked</span>: <span class="hljs-string">"error"</span>;
+    <span class="hljs-attr">--icon-passed-count</span>: <span class="hljs-string">"check_circle_outline"</span>;
+    <span class="hljs-attr">--icon-failed-count</span>: <span class="hljs-string">"highlight_off"</span>;
+    <span class="hljs-attr">--icon-pending-count</span>: <span class="hljs-string">"pause_circle_outline"</span>;
+    <span class="hljs-attr">--icon-blocked-count</span>: <span class="hljs-string">"error_outline"</span>; 
+  } 
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></code></pre>
+        </div>
+        <div class="tab2">
+            <h3>In a new Sass theme file, like mochaterial.coffee.scss:</h3>
+            <pre><code class="hljs language-scss"><span class="hljs-comment">// Set the Sass variables to override</span>
+<span class="hljs-variable">$mdc-theme-primary</span>: <span class="hljs-number">#5d3b1e</span>;
+<span class="hljs-variable">$mdc-theme-secondary</span>: <span class="hljs-number">#e8c89e</span>;
+<span class="hljs-variable">$mdc-theme-surface</span>: <span class="hljs-number">#8c6546</span>;
+<span class="hljs-variable">$mdc-theme-on-surface</span>: <span class="hljs-number">#FFFFFF</span>;
+<span class="hljs-variable">$mdc-theme-text-primary-on-background</span>: <span class="hljs-number">#5d3b1e</span>;
+<span class="hljs-variable">$mdc-theme-text-hint-on-background</span>: <span class="hljs-number">#8c6546</span>;
+
+<span class="hljs-variable">$mocha-passed</span>: <span class="hljs-number">#76ff03</span>;
+<span class="hljs-variable">$mocha-failed</span>: <span class="hljs-number">#ffa4a2</span>;
+<span class="hljs-comment">// Note: fast, slow, replay are inherited so they can be dropped </span>
+
+<span class="hljs-variable">$icon-blocked</span>: <span class="hljs-string">"error"</span>;
+<span class="hljs-variable">$icon-passed-count</span>: <span class="hljs-string">"check_circle_outline"</span>;
+<span class="hljs-variable">$icon-failed-count</span>: <span class="hljs-string">"highlight_off"</span>;
+<span class="hljs-variable">$icon-pending-count</span>: <span class="hljs-string">"pause_circle_outline"</span>;
+<span class="hljs-variable">$icon-blocked-count</span>: <span class="hljs-string">"error_outline"</span>; 
+
+<span class="hljs-comment">// Now import the base scss</span>
+@<span class="hljs-keyword">import</span> <span class="hljs-string">"mochaterial"</span>;</code></pre>
+<h3>Build with "gulp styles", and in your html markup include the new theme:</h3>
+<pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"./mochaterial.coffee.css"</span>&gt;</span></code></pre>
+        </div>
+        
+        </section>
+    </div>
+    <h2>License</h2>
+    <p>Mochaterial is <a href="https://github.com/netpoint-gmbh/mochaterial/blob/master/LICENSE.md" target="_blank">MIT licensed</a>.</p>
+    <h2>Go Forth and Test!</h2>
+    <p>We hope you find Mochaterial to be a useful tool in your JavaScript testing belt. If you need assistance getting your test suites off the ground, <a href="mailto:info@netpoint.de?subject=Mochaterial help!">let us know</a>, we can help with that!</p>
+</main>
+<!--
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+-->
+        </div>
+    </div>
+    <footer>
+       
+    </footer>   
+</body>
+</html>
